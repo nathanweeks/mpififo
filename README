@@ -26,10 +26,11 @@ mpififo.c - source code
 INSTALLATION
 ============
 
-1. (Optional) The default Makefile should work on a POSIX-compliant system, 
-   but it can be edited to choose a specific compiler or compiler flags.
+1. (Optional) Edit the Makefile, customize the CC and/or CFLAGS macro for your
+   environment (CC and CFLAGS can also be overridden on the command-line as
+   demonstrated below).
 
-2. Issue the following commands to build and test ipcmd:
+2. Issue the "make" command to build mpififo
 
     make [CC=...] [CFLAGS=...]
 
