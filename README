@@ -1,0 +1,74 @@
+mpififo - inter-node named pipes over MPI
+=========================================
+
+mpififo is an MPI-based middleware that allows processes in a Unix pipeline to
+execute on different nodes in a compute cluster via named pipes.
+
+SUPPORTED PLATFORMS
+===================
+
+ipcmd requires the following environment:
+
+  * POSIX
+  * C compiler supporting C99
+  * OpenMP 2.5
+  * MPI implementation supporting MPI_THREAD_MULTIPLE (tested with MPICH 3.0.4)
+
+CONTENTS
+========
+
+CHANGES   - Visible changes in the current version and previous versions
+Makefile  - POSIX Makefile
+README    - This file containing basic information & installation instructions
+TODO      - Wish list of future modifications
+mpififo.c - source code
+    
+INSTALLATION
+============
+
+1. (Optional) The default Makefile should work on a POSIX-compliant system, 
+   but it can be edited to choose a specific compiler or compiler flags.
+
+2. Issue the following commands to build and test ipcmd:
+
+    make [CC=...] [CFLAGS=...]
+
+USAGE
+=====
+
+[mpiexec] mpififo [-crv] writefifo1 readfifo1 [writefifo2 readfifo2...]
+  -c : create fifos upon startup
+  -r : remove fifos after mpififo exits
+  -v : verbose output to stderr (for debugging)
+
+See the web site and publication for more information.
+
+WEB SITE
+========
+
+https://bitbucket.org/nathanweeks/mpififo
+
+PUBLICATION
+===========
+
+Weeks N, Kraeva M, Luecke G. Parallelization of software pipelines using the
+mpififo tool. Cluster Computing (CLUSTER), 2013 IEEE International Conference
+on. [In Press]
+
+KNOWN ISSUES
+============
+
+Deadlocks have been observed with OpenMPI 1.7.2. This seems to be an issue
+with OpenMPI's support for MPI_THREAD_MULTIPLE, rather than a bug in the
+mpififo code.
+
+BUGS
+====
+
+Please report any bugs in the issue tracker at the web site.
+
+AUTHOR
+======
+
+Nathan Weeks
+http://weeks.public.iastate.edu/

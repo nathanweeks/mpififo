@@ -1,0 +1,10 @@
+* Add man page
+
+* Add examples
+
+* Allow buffer size to be specified at run time, either via command-line
+  option or environment variable.
+
+* The "-r" option causes the rank 0 process to remove fifos at completion. It
+  may be more useful to remove fifos after a user process has open()ed them;
+  this could help catch user bugs.
