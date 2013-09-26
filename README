@@ -22,6 +22,7 @@ Makefile  - POSIX Makefile
 README    - This file containing basic information & installation instructions
 TODO      - Wish list of future modifications
 mpififo.c - source code
+tests     - Tests scripts run by "make check"
     
 INSTALLATION
 ============
@@ -32,7 +33,14 @@ INSTALLATION
 
 2. Issue the "make" command to build mpififo
 
-    make [CC=...] [CFLAGS=...]
+   make [CC=...] [CFLAGS=...]
+
+3. Submit a batch script or interactive job (e.g., "qsub -I" for PBS/TORQUE)
+   that runs the test scripts (MPICH w/ Hydra process manager only):
+   
+   make check [NODES=1] [NPROC=4]
+
+   By default, a single node & 4 processes are used.
 
 USAGE
 =====
@@ -62,6 +70,12 @@ http://weeks.public.iastate.edu/files/mpififo_poster.pdf
 
 KNOWN ISSUES
 ============
+
+To terminate the execution of all mpififo processes, one of the mpififo
+processes must be manually killed. As this is typically done by a job
+scheduler upon completion of a job, this can be automated by running mpififo
+asynchronously ("in the background") in the job script, without wait()'ing on
+it. This issue will be addressed in a future release.
 
 Deadlocks have been observed with OpenMPI 1.7.2. This seems to be an issue
 with OpenMPI's support for MPI_THREAD_MULTIPLE, rather than a bug in the
