@@ -108,8 +108,12 @@ int main(int argc, char *argv[]) {
     int rank;
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
-    if (verbose)
-        fprintf(stderr, "rank %i reporting for duty\n", rank);
+    if (verbose) {
+        char name[MPI_MAX_PROCESSOR_NAME];
+        int resultlen;
+        MPI_Get_processor_name(name, &resultlen);
+        fprintf(stderr, "rank %i (%s) reporting for duty\n", rank, name);
+    }
 
     // if "-c" option is specified, rank 0 process creates FIFO with owner
     // read, write permissions
@@ -354,6 +358,10 @@ int main(int argc, char *argv[]) {
     if (verbose)
         fprintf(stderr, "rank %d thread %d at end of parallel region\n", rank, thread_num);
 }
+
+    if (verbose)
+        fprintf(stderr, "rank %d: calling MPI_Finalize()...\n", rank);
+
     MPI_Finalize();
 
     // if "-r" option is specified, rank 0 process removes fifos
