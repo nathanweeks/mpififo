@@ -287,10 +287,19 @@ int main(int argc, char *argv[]) {
 // reader thread
 //****************************************
     else {
+        int readfifofd;
+        // use open(..., O_WRONLY) instead of fopen(...,"w"), as the former
+        // fails if the file doesn't exist, while the latter creates the file.
+        if ((readfifofd = open(argv[optind + thread_num], O_WRONLY)) == -1) {
+            perror("open readfifo");
+            MPI_Abort(MPI_COMM_WORLD, 5);
+        }
+
+        // associate file stream with the file descriptor so we get stdio
+        // buffering
         FILE *readfifo;
-        // TODO: ensure fifo exists; fopen() will create a file if it doesn't!
-        if ((readfifo = fopen(argv[optind + thread_num], "w")) == NULL) {
-            perror("fopen readfifo");
+        if ((readfifo = fdopen(readfifofd, "w")) == NULL) {
+            perror("fdopen readfifo");
             MPI_Abort(MPI_COMM_WORLD, 5);
         }
 
